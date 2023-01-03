@@ -14,7 +14,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent content={title} position="BottomCenter">
     <button
       type="button"
-      onClick={customFunc}
+      onClick={() => customFunc()}
       style={{ color }}
       className="relative text-xl rounded-full p-3 hover:bg-light-gray">
       <span
@@ -35,6 +35,7 @@ const Navbar = () => {
     setIsClicked,
     screenSize,
     setScreenSize,
+    currentColor
   } = useStateContext();
 
   useEffect(() => {
@@ -53,35 +54,35 @@ const Navbar = () => {
     } else {
       setActiveMenu(true);
     }
-  }, [screenSize]);
+  }, [screenSize, setActiveMenu]);
 
   return (
     <div className="flex justify-between p-2 md:mx-6 relative">
       <NavButton
         title="Menu"
         customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
-        color="blue"
+        color={currentColor}
         icon={<AiOutlineMenu />}
       />
       <div className="flex">
         <NavButton
           title="Cart"
           customFunc={() => handleClick('cart')}
-          color="blue"
+          color={currentColor}
           icon={<FiShoppingCart />}
         />
         <NavButton
           title="Chat"
           dotColor="#03C9D7"
           customFunc={() => handleClick('chat')}
-          color="blue"
+          color={currentColor}
           icon={<BsChatLeft />}
         />
         <NavButton
           title="Notifications"
           dotColor="#03C9D7"
           customFunc={() => handleClick('notifications')}
-          color="blue"
+          color={currentColor}
           icon={<RiNotification3Line />}
         />
         <TooltipComponent content="Profile" position="BottomCenter">
@@ -107,6 +108,7 @@ const Navbar = () => {
                 Michel
               </span>
             </p>
+            <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
         </TooltipComponent>
 
